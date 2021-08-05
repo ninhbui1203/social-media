@@ -1,0 +1,7 @@
+## Config Backend
+npm i express mongoose cors dotenv bcrypt jsonwebtoken cookie-parser
+npm i -D nodemon
+
+## Config Frontend
+npx create-react-app client
+npm i axios react-router-dom redux react-redux redux-thunk redux-devtools-extension moment

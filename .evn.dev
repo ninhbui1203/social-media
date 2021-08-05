@@ -1,0 +1,3 @@
+MONGODB_URI = mongodb+srv://username:password@social-network.hgio4.mongodb.net/database?retryWrites=true&w=majority
+ACCESS_TOKEN_SECRET = 
+REFRESH_TOKEN_SECRET = 
