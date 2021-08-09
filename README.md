@@ -2,6 +2,8 @@
 npm i
 
 # Frontend
-cd client
+cd client 
+
+#
 npm i
 

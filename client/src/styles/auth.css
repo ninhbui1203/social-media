@@ -15,10 +15,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.pass small {
-    top: 50%;
+.pass small.hide-pass {
+    top: 9px;
     right: 10px;
-    transform: translate(0, -50%);
     margin: 0;
     color: #8c8c8c;
     cursor: pointer;

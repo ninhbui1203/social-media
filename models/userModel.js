@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "https://picsum.photos/400/400",
+      default:
+        "https://res.cloudinary.com/ninhbui1203/image/upload/v1628523517/social-media/avatar.jpg",
     },
     role: {
       type: String,
@@ -44,6 +45,10 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     address: {
+      type: String,
+      default: "",
+    },
+    website: {
       type: String,
       default: "",
     },

@@ -1,0 +1,21 @@
+#nav_top .nav-item {
+    opacity: 0.5;
+}
+#nav_top .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+#nav_top .nav-item.active {
+    opacity: 1;
+}
+#nav_top .nav-item .material-icons {
+    font-size: 1.7rem;
+}
+#nav_top .nav-item.dropdown {
+    opacity: 1;
+}
+#nav_top .nav-item.dropdown .dropdown-menu {
+    position: absolute;
+    left: inherit;
+    right: 0;
+}
