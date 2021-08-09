@@ -1,0 +1,52 @@
+.form_search {
+    position: relative;
+    min-width: 250px;
+}
+.form_search #search {
+    border: thin solid #ddd;
+    outline: none;
+    border-radius: 3px;
+    width: 100%;
+    text-indent: 7px;
+    font-size: 14px;
+    min-height: 30px;
+    padding-bottom: 3px;
+}
+.form_search .search_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+.form_search .search_icon .material-icons {
+    font-size: 20px;
+}
+.form_search .close_search {
+    position: absolute;
+    top: 1px;
+    right: 7px;
+    color: crimson;
+    cursor: pointer;
+}
+.form_search .close_search img {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    width: 17px;
+    height: 17px;
+}
+.search-users {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    background: #fdfdfd;
+    max-height: calc(100vh - 150px);
+    margin-top: 2px;
+}
+.search-users .card-user {
+    margin-bottom: -1px;
+    line-height: 20px;
+}
