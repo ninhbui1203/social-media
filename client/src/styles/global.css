@@ -61,6 +61,12 @@ img {
 /* --------------------- PROFILE ----------------------- */
 @import url(./profile.css);
 
+/* --------------------- HOME ----------------------- */
+@import url(./home.css);
+
+/* --------------------- HOME ----------------------- */
+@import url(./status_modal.css);
+
 /* ----------------- RESPONSIVE ---------------- */
 @media (max-width: 768px) {
     .header,

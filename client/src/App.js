@@ -6,6 +6,7 @@ import PageRender from "./customRouter/PageRender";
 import PrivateRouter from "./customRouter/PrivateRouter";
 
 import Alert from "./components/alert/Alert";
+import StatusModal from "./components/StatusModal";
 import Header from "./components/header/Header";
 
 import Home from "./pages/home";
@@ -13,7 +14,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 
 function App() {
-  const { auth } = useSelector((state) => state);
+  const { auth, status } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,11 +23,13 @@ function App() {
 
   return (
     <Router>
+      <Alert />
+
       <input type="checkbox" id="theme" />
       <div className="App">
         <div className="main">
-          <Alert />
           {auth.token && <Header />}
+          {status && <StatusModal />}
           <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
 
