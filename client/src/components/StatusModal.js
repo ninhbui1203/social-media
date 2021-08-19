@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
-import { createPost } from "../redux/actions/postAction";
+import { createPost, updatePost } from "../redux/actions/postAction";
 
 function StatusModal(props) {
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
-  const { auth, theme } = useSelector((state) => state);
+  const { auth, theme, status } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleUploadImages = (e) => {
@@ -36,13 +36,29 @@ function StatusModal(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(content, images, auth));
+    if (status.isEdit) {
+      dispatch(updatePost(content, images, auth, status));
+    } else {
+      dispatch(createPost(content, images, auth));
+    }
+
+    dispatch({
+      type: GLOBALTYPES.STATUS,
+      payload: false,
+    });
   };
+
+  useEffect(() => {
+    if (status.isEdit) {
+      setContent(status.content);
+      setImages(status.images);
+    }
+  }, [status]);
   return (
     <div className="status_modal">
       <form onSubmit={handleSubmit}>
         <div className="status_header">
-          <h5 className="m-0">Create Post</h5>
+          <h5 className="m-0">{status.isEdit ? "Edit" : "Create"} Post</h5>
           <span
             onClick={() => {
               dispatch({ type: GLOBALTYPES.STATUS, payload: false });
@@ -66,7 +82,7 @@ function StatusModal(props) {
               <div key={index} id="file_img">
                 <img
                   className="img-thumbnail rounded"
-                  src={URL.createObjectURL(image)}
+                  src={image.url ? image.url : URL.createObjectURL(image)}
                   alt={image.name}
                   style={{ filter: theme ? "invert(1)" : "invert(0)" }}
                 />
