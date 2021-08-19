@@ -74,7 +74,7 @@ function Search(props) {
       } else {
         setUsers([]);
       }
-    }, 500);
+    }, 300);
   };
 
   return (
