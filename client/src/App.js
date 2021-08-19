@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { refreshToken } from "./redux/actions/authAction";
+import { getPosts } from "./redux/actions/postAction";
+
 import PageRender from "./customRouter/PageRender";
 import PrivateRouter from "./customRouter/PrivateRouter";
 
@@ -20,6 +22,10 @@ function App() {
   useEffect(() => {
     dispatch(refreshToken());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (auth.token) dispatch(getPosts(auth.token));
+  }, [auth.token, dispatch]);
 
   return (
     <Router>

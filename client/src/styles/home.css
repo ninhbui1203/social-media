@@ -18,3 +18,47 @@
 .status .statusBtn:hover {
     background-color: #ddd;
 }
+
+/* --------------- POSTS ------------- */
+.posts .card {
+    box-shadow: 0 0 10px #ddd;
+}
+.posts .card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px 25px;
+}
+.posts .card_header .card_name {
+    transform: translateX(3px);
+}
+.posts .card_header .dropdown-menu {
+    position: absolute;
+    left: inherit !important;
+    right: 0;
+}
+.posts .card_header .dropdown-item {
+    display: flex;
+    margin: 5px 0;
+}
+.posts .card_body-content {
+    padding: 0 25px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+.posts .card_body-content .readMore {
+    color: crimson;
+    cursor: pointer;
+    font-size: 13px;
+}
+.posts .card_icon_menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    cursor: pointer;
+}
+.posts .card_icon_menu i {
+    font-size: 28px;
+    margin: 10px;
+}

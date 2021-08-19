@@ -42,7 +42,10 @@ img {
     width: 40px;
     height: 40px;
 }
-
+.loading-page {
+    width: 80px;
+    height: 80px;
+}
 /* --------------------- AUTH ----------------------- */
 @import url(./auth.css);
 
@@ -66,30 +69,3 @@ img {
 
 /* --------------------- HOME ----------------------- */
 @import url(./status_modal.css);
-
-/* ----------------- RESPONSIVE ---------------- */
-@media (max-width: 768px) {
-    .header,
-    #nav_top {
-        box-shadow: 0 0 2px 0px rgb(0 0 0 / 50%);
-    }
-    .header > .navbar {
-        flex-direction: column;
-    }
-    .header > .navbar .form_search {
-        width: 100%;
-    }
-    #nav_top {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-    }
-    #nav_top .navbar-nav {
-        justify-content: space-around;
-    }
-    #nav_top .nav-item.dropdown .dropdown-menu {
-        top: inherit;
-        bottom: 100%;
-    }
-}
