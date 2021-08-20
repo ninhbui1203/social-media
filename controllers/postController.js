@@ -13,7 +13,9 @@ const postController = {
         images,
         user: req.user.id,
       });
-      newPost.populate("user", "_id username avatar createdAt").execPopulate();
+      newPost
+        .populate("user likes", "_id username avatar createdAt")
+        .execPopulate();
       await newPost.save();
 
       res.json({
@@ -33,7 +35,7 @@ const postController = {
         user: [...req.user.following, req.user._id],
       })
         .sort("-createdAt")
-        .populate("user", "_id username avatar createdAt");
+        .populate("user likes", "_id username avatar createdAt");
       res.json({
         msg: "Success",
         posts,
@@ -57,7 +59,7 @@ const postController = {
           images,
         },
         { new: true }
-      ).populate("user", "_id avatar username createdAt");
+      ).populate("user likes", "_id avatar username createdAt");
 
       res.json({
         msg: "Update post success.",
@@ -65,6 +67,58 @@ const postController = {
       });
     } catch (error) {
       res.status(500).json({ msg: error.message });
+    }
+  },
+
+  likePost: async (req, res) => {
+    try {
+      const post = await Posts.findOne({
+        _id: req.params.id,
+        likes: req.user._id,
+      });
+
+      if (post) return res.status(400).json({ msg: "You liked this post." });
+
+      await Posts.findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: { likes: req.user._id },
+        },
+        { new: true }
+      );
+
+      res.json({
+        msg: "Like post success.",
+      });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
+  unLikePost: async (req, res) => {
+    try {
+      const post = await Posts.findOne(
+        {
+          _id: req.params.id,
+          likes: req.user._id,
+        },
+        { new: true }
+      );
+
+      if (!post)
+        return res.status(400).json({ msg: "You haven't liked this post yet" });
+
+      await Posts.findByIdAndUpdate(req.params.id, {
+        $pull: {
+          likes: req.user._id,
+        },
+      });
+
+      res.json({
+        msg: "Unlike post success.",
+      });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
     }
   },
 };

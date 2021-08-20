@@ -1,4 +1,4 @@
-import { GLOBALTYPES } from "../actions/globalTypes";
+import { GLOBALTYPES, DeleteData } from "../actions/globalTypes";
 import { getDataAPI, postDataAPI, patchDataAPI } from "../../utils/fetchData";
 import imageUpload from "../../utils/imageUpload";
 
@@ -131,3 +131,47 @@ export const updatePost =
       });
     }
   };
+
+export const likePost = (post, auth) => async (dispatch) => {
+  const newPost = {
+    ...post,
+    likes: [...post.likes, auth.user],
+  };
+
+  try {
+    await patchDataAPI(`post/like/${post._id}`, null, auth.token);
+    dispatch({
+      type: POST_TYPES.UPDATE_POST,
+      payload: newPost,
+    });
+  } catch (error) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const unLikePost = (post, auth) => async (dispatch) => {
+  const newPost = {
+    ...post,
+    likes: DeleteData(post.likes, auth.user._id),
+  };
+
+  try {
+    await patchDataAPI(`post/unlike/${post._id}`, null, auth.token);
+    dispatch({
+      type: POST_TYPES.UPDATE_POST,
+      payload: newPost,
+    });
+  } catch (error) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};

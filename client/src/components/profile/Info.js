@@ -10,6 +10,7 @@ import Following from "./Following";
 import Avatar from "../Avatar";
 import EditProfile from "./EditProfile";
 import FollowBtn from "../FollowBtn";
+import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 
 function Info() {
   const { id } = useParams();
@@ -35,6 +36,21 @@ function Info() {
       }
     }
   }, [id, auth, profile.users, dispatch]);
+
+  useEffect(() => {
+    console.log(showFollowers, showFollowing, editUser);
+    if (showFollowers || showFollowing || editUser) {
+      dispatch({
+        type: GLOBALTYPES.MODAL,
+        payload: true,
+      });
+    } else {
+      dispatch({
+        type: GLOBALTYPES.MODAL,
+        payload: false,
+      });
+    }
+  }, [showFollowers, showFollowing, editUser, dispatch]);
 
   return (
     <div className="info">
