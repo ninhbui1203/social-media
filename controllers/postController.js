@@ -106,7 +106,9 @@ const postController = {
       );
 
       if (!post)
-        return res.status(400).json({ msg: "You haven't liked this post yet" });
+        return res
+          .status(400)
+          .json({ msg: "You haven't liked this post yet." });
 
       await Posts.findByIdAndUpdate(req.params.id, {
         $pull: {

@@ -12,13 +12,13 @@ function CardFooter({ post }) {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
 
-  const handleLike = async () => {
-    await dispatch(likePost(post, auth));
+  const handleLike = () => {
+    dispatch(likePost(post, auth));
     setIsLike(true);
   };
 
-  const handleUnLike = async () => {
-    await dispatch(unLikePost(post, auth));
+  const handleUnLike = () => {
+    dispatch(unLikePost(post, auth));
     setIsLike(false);
   };
 
