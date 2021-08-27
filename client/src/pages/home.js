@@ -20,7 +20,7 @@ function Home(props) {
         ) : homePosts.result === 0 ? (
           "No posts."
         ) : (
-          <Posts homePosts={homePosts} />
+          <Posts />
         )}
       </div>
       <div className="col-md-4"></div>

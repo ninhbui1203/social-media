@@ -28,7 +28,9 @@ function CardHeader({ post }) {
 
         <div className="card_name">
           <h6 className="m-0">
-            <Link to={`/profile/${post.user._id}`}>{post.user.username}</Link>
+            <Link className="text-dark" to={`/profile/${post.user._id}`}>
+              {post.user.username}
+            </Link>
           </h6>
           <small className="text-muted">
             {moment(post.createdAt).fromNow()}
