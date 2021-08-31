@@ -3,8 +3,9 @@ import { PROFILE_TYPES } from "../actions/profileAction";
 
 const initalState = {
   loading: false,
+  ids: [],
   users: [],
-  posts: [],
+  userPosts: [],
 };
 
 function profileReducer(state = initalState, action) {
@@ -18,6 +19,16 @@ function profileReducer(state = initalState, action) {
       return {
         ...state,
         users: [...state.users, action.payload.user],
+      };
+    case PROFILE_TYPES.GET_ID:
+      return {
+        ...state,
+        ids: [...state.ids, action.payload],
+      };
+    case PROFILE_TYPES.GET_POSTS:
+      return {
+        ...state,
+        userPosts: [...state.userPosts, action.payload],
       };
     case PROFILE_TYPES.FOLLOW:
       return {

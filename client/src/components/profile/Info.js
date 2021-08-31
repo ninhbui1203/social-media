@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-
-import { getProfileUsers } from "../../redux/actions/profileAction";
 
 import Followers from "./Followers";
 import Following from "./Following";
@@ -10,31 +6,39 @@ import Following from "./Following";
 import Avatar from "../Avatar";
 import EditProfile from "./EditProfile";
 import FollowBtn from "../FollowBtn";
+import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 
-function Info() {
-  const { id } = useParams();
+function Info({ auth, profile, id, dispatch }) {
   const [userData, setUserData] = useState([]);
   const [editUser, setEditUser] = useState(false);
 
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
-  const { auth, profile } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (auth.token) {
       if (auth.user._id === id) {
         setUserData([auth.user]);
       } else {
-        dispatch(getProfileUsers(id, auth.token, profile.users));
-
         const newData = profile.users.filter((user) => user._id === id);
         setUserData(newData);
       }
     }
-  }, [id, auth, profile.users, dispatch]);
+  }, [id, auth, profile.users]);
+
+  useEffect(() => {
+    if (showFollowers || showFollowing || editUser) {
+      dispatch({
+        type: GLOBALTYPES.MODAL,
+        payload: true,
+      });
+    } else {
+      dispatch({
+        type: GLOBALTYPES.MODAL,
+        payload: false,
+      });
+    }
+  }, [showFollowers, showFollowing, editUser, dispatch]);
 
   return (
     <div className="info">

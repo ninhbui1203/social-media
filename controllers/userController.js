@@ -1,5 +1,5 @@
-const { findById } = require("../models/userModel");
 const Users = require("../models/userModel");
+const Posts = require("../models/postModel");
 
 const userController = {
   // [GET] //api/search?username=:username
@@ -118,6 +118,23 @@ const userController = {
         },
         { new: true }
       );
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
+  // [GET] /api/user-posts/:id
+  getUserPosts: async (req, res) => {
+    try {
+      const posts = await Posts.find({ user: req.params.id }).populate(
+        "user likes",
+        "-password"
+      );
+
+      res.json({
+        posts,
+        result: posts.length,
+      });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

@@ -13,4 +13,6 @@ router.patch("/profile/:id/follow", auth, userController.follow);
 
 router.patch("/profile/:id/unfollow", auth, userController.unfollow);
 
+router.get("/user-posts/:id", auth, userController.getUserPosts);
+
 module.exports = router;

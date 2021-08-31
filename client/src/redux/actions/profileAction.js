@@ -8,32 +8,46 @@ export const PROFILE_TYPES = {
   GET_USER: "GET_USER",
   FOLLOW: "FOLLOW",
   UNFOLLOW: "UNFOLLOW",
+  GET_ID: "GET_PROFILE_ID",
+  GET_POSTS: "GET_PROFILE_POSTS",
 };
 
 export const getProfileUsers = (id, token, users) => async (dispatch) => {
-  if (users.every((user) => user._id !== id)) {
-    try {
-      dispatch({
-        type: PROFILE_TYPES.LOADING,
-        payload: true,
-      });
-      const res = await getDataAPI(`profile/${id}`, token);
-      dispatch({
-        type: PROFILE_TYPES.GET_USER,
-        payload: res.data,
-      });
-      dispatch({
-        type: PROFILE_TYPES.LOADING,
-        payload: false,
-      });
-    } catch (error) {
-      dispatch({
-        type: GLOBALTYPES.ALERT,
-        payload: {
-          error: error.response.data.msg,
-        },
-      });
-    }
+  dispatch({
+    type: PROFILE_TYPES.GET_ID,
+    payload: id,
+  });
+
+  try {
+    dispatch({
+      type: PROFILE_TYPES.LOADING,
+      payload: true,
+    });
+
+    const res = await getDataAPI(`profile/${id}`, token);
+    const res1 = await getDataAPI(`user-posts/${id}`, token);
+
+    dispatch({
+      type: PROFILE_TYPES.GET_USER,
+      payload: res.data,
+    });
+
+    dispatch({
+      type: PROFILE_TYPES.GET_POSTS,
+      payload: { ...res1.data, _id: id },
+    });
+
+    dispatch({
+      type: PROFILE_TYPES.LOADING,
+      payload: false,
+    });
+  } catch (error) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
   }
 };
 
