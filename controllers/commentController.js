@@ -32,6 +32,8 @@ const commentController = {
   // [GET] /api/comments
   getList: async (req, res) => {
     try {
+      const comments = await Comments.find();
+      res.json({ comments });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

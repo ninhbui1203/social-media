@@ -1,4 +1,5 @@
 const Posts = require("../models/postModel");
+const Comments = require("../models/commentModel");
 
 const postController = {
   create: async (req, res) => {
@@ -126,6 +127,42 @@ const postController = {
       res.json({
         msg: "Unlike post success.",
       });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
+  getPost: async (req, res) => {
+    try {
+      const post = await Posts.findById(req.params.id)
+        .populate("user likes", "-password")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user likes",
+            select: "-password",
+          },
+        });
+      res.json({ post });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+
+  deletePost: async (req, res) => {
+    try {
+      const post = await Posts.findOneAndDelete({
+        _id: req.params.id,
+        user: req.user._id,
+      });
+
+      await Comments.deleteMany({
+        _id: {
+          $in: post.comments,
+        },
+      });
+
+      res.json({ msg: "Delete post success!" });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }

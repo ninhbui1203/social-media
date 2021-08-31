@@ -1,5 +1,10 @@
 import { GLOBALTYPES, DeleteData } from "../actions/globalTypes";
-import { getDataAPI, postDataAPI, patchDataAPI } from "../../utils/fetchData";
+import {
+  getDataAPI,
+  postDataAPI,
+  patchDataAPI,
+  deleteDataAPI,
+} from "../../utils/fetchData";
 import imageUpload from "../../utils/imageUpload";
 
 export const POST_TYPES = {
@@ -7,6 +12,8 @@ export const POST_TYPES = {
   GET_POSTS: "GET_POSTS",
   LOADING_POST: "LOADING_POST",
   UPDATE_POST: "UPDATE_POST",
+  GET_POST: "GET_POST",
+  DELETE_POST: "DELETE_POST",
 };
 
 export const createPost = (content, images, auth) => async (dispatch) => {
@@ -140,7 +147,7 @@ export const likePost = (post, auth) => async (dispatch) => {
 
   dispatch({
     type: POST_TYPES.UPDATE_POST,
-    payload: newPost,
+    payload: { newPost },
   });
   try {
     await patchDataAPI(`post/like/${post._id}`, null, auth.token);
@@ -167,6 +174,55 @@ export const unLikePost = (post, auth) => async (dispatch) => {
 
   try {
     await patchDataAPI(`post/unlike/${post._id}`, null, auth.token);
+  } catch (error) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const getPost = (id, auth) => async (dispatch) => {
+  try {
+    const post = await getDataAPI(`post/${id}`, auth.token);
+    dispatch({
+      type: POST_TYPES.GET_POST,
+      payload: post.data.post,
+    });
+  } catch (error) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        error: error.response.data.msg,
+      },
+    });
+  }
+};
+
+export const deletePost = (id, auth) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        loading: true,
+      },
+    });
+
+    const res = await deleteDataAPI(`post/${id}`, auth.token);
+
+    dispatch({
+      type: POST_TYPES.DELETE_POST,
+      payload: id,
+    });
+
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: {
+        msg: res.data.msg,
+      },
+    });
   } catch (error) {
     dispatch({
       type: GLOBALTYPES.ALERT,
